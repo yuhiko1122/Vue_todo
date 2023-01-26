@@ -1,25 +1,67 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
   <head>
-    <meta charset="utf-8" />
-    <title>ToDo</title>
+    <meta charset="UTF-8" />
+    <title>Vue.js TODO APP</title>
+    <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-    <div id="app">
-      <input type="text" v-model="myName" />
-      {{myName}}
+    <div id="to-do">
+      <!-- Vue.jsで扱うDOM要素を指定するためidを付与 -->
+      <p>
+        NewTask:
+        <input type="text" v-model="newTask" />
+        <button v-on:click="addTodo()">Add</button>
+      </p>
+      <hr />
+      <ul>
+        <li v-for="todo in todos">
+          <input type="checkbox" v-model="todo.isCompleted" />
+          <!--v-model=双方向データバインディング-->
+          <!--今回はcheckboxのvalueを取る-->
+          <!--checkboxの場合v-modelの値はboolean値を取る-->
+          <span :class="{ 'complete': todo.isCompleted }">
+            <!--v-bind-->
+            <!--todo.isCompleted(checkboxのvalue)がtrueになることで-->
+            <!--spanにclassが適用されcssがかかる-->
+            {{ todo.task }}
+            <!--todosの連想配列の中身を表示-->
+          </span>
+          <button v-on:click="deleteTodo(todo)">Delete</button>
+        </li>
+      </ul>
     </div>
   </body>
-  <script src="https://unpkg.com/vue@next"></script>
-  <script>
-    const instance = {
-      data() {
-        return {
-          myName: "MouMou",
-        };
-      },
-    };
 
-    Vue.createApp(instance).mount("#app");
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
+  <script src="./main.js"></script>
+  <script>
+    new Vue({
+      el: "#to-do",
+      //dataプロパティ
+      data: {
+        newTask: "",
+        todos: [
+          { task: "Rubyの勉強をする", isCompleted: false },
+          { task: "Vue.jsのアプリを作る", isCompleted: false },
+          { task: "Youtubeをみる", isCompleted: false },
+          //isCompleted: falseはチェックボックスにチェックを入れてない状態
+          //kye=task todos=連想配列
+        ],
+      },
+      //methodsプロパティ
+      methods: {
+        addTodo: function () {
+          if (this.newTask == "") return;
+          //newTaskに何も入ってない場合これ以降の処理をしない
+          this.todos.push({ task: this.newTask, isCompleted: false });
+          this.newTask = "";
+        },
+        deleteTodo: function (todo) {
+          var index = this.todos.indexOf(todo);
+          this.todos.splice(index, 1);
+        },
+      },
+    });
   </script>
 </html>
