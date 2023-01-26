@@ -2,7 +2,7 @@
 <html lang="ja">
   <head>
     <meta charset="UTF-8" />
-    <title>Vue.js TODO APP</title>
+    <title>VueTODO</title>
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
@@ -30,6 +30,7 @@
           <button v-on:click="deleteTodo(todo)">Delete</button>
         </li>
       </ul>
+      <button onclick="location.href='./next.html'">botton</button>
     </div>
   </body>
 
@@ -42,9 +43,9 @@
       data: {
         newTask: "",
         todos: [
-          { task: "Rubyの勉強をする", isCompleted: false },
-          { task: "Vue.jsのアプリを作る", isCompleted: false },
-          { task: "Youtubeをみる", isCompleted: false },
+          { task: "勉強", isCompleted: false },
+          { task: "風呂", isCompleted: false },
+          { task: "飯", isCompleted: false },
           //isCompleted: falseはチェックボックスにチェックを入れてない状態
           //kye=task todos=連想配列
         ],
